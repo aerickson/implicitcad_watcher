@@ -16,7 +16,7 @@ def run_command
   puts cmd
   # TODO: do this
   value = `#{cmd}`
-  result = $?.exitstatus
+  result = $CHILD_STATUS.exitstatus
   # puts result
   puts value
   if result.zero?
