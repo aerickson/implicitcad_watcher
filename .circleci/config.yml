@@ -5,7 +5,7 @@ jobs:
       - image: circleci/ruby:2.4.2-jessie-node
     steps:
       - checkout
-      - run: bundle check && bundle install
+      - run: bundle install && bundle check
   test:
     docker:
       - image: circleci/ruby:2.4.2-jessie
