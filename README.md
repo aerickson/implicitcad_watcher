@@ -26,6 +26,12 @@ implicitcad_watcher
 
 `gem install https://www.github.com/aerickson/implicitcad_watcher`
 
+## TODO
+
+- arg parsing
+  - verbose/debug mode
+- write blah.escad out to blah.stl vs output.stl
+
 ## License
 
 implicitcad_watcher is released under the MIT License. See the bundled LICENSE file for details.
