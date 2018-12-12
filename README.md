@@ -26,7 +26,13 @@ gem install specific_install
 gem specific_install -l https://www.github.com/aerickson/implicitcad_watcher
 ```
 
-## TODO
+## Development
+
+### Running Locally
+
+`ruby -Ilib bin/implicitcad_watcher`
+
+### TODO
 
 - arg parsing
   - verbose/debug mode
