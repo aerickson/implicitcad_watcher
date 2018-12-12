@@ -31,7 +31,7 @@ class ImplicitCadWatcher
   def self.run(files)
     files.each do |file|
       stl_file = get_result_file(file)
-      render_cmd = "#{IMPLICITCAD_BIN} -f stl -o #{stl_file} #{file}"
+      render_cmd = "#{IMPLICITCAD_BIN} -f stl -o \"#{stl_file}\" \"#{file}\""
       puts render_cmd if DEBUG_MODE
       value = `#{render_cmd}`
       result = $CHILD_STATUS.exitstatus
