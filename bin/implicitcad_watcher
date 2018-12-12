@@ -2,10 +2,12 @@
 
 require 'implicitcad_watcher'
 
-trap("SIGINT") { 
+trap('SIGINT') { handle_sigint }
+
+def handle_sigint
   # throw :ctrl_c
-  puts "Ctrl-C receied. Exiting."
+  puts 'Ctrl-C receied. Exiting.'
   exit 130
-}
+end
 
 puts ImplicitCadWatcher.main(ARGV[0])
