@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'implicitcad_watcher'
+
+trap("SIGINT") { 
+  # throw :ctrl_c
+  puts "Ctrl-C receied. Exiting."
+  exit 130
+}
+
+puts ImplicitCadWatcher.main(ARGV[0])
