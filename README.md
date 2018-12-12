@@ -31,6 +31,8 @@ gem specific_install -l https://www.github.com/aerickson/implicitcad_watcher
 - arg parsing
   - verbose/debug mode
 - write blah.escad out to blah.stl vs output.stl
+- don't expect implicitcad in cabal location?
+  - look for on path or take config?
 
 ## License
 
