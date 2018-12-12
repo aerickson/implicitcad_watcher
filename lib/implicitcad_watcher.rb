@@ -49,7 +49,6 @@ class ImplicitCadWatcher
       puts "modified absolute path: #{modified}" if DEBUG_MODE
       puts "added absolute path: #{added}" if DEBUG_MODE
       puts "removed absolute path: #{removed}" if DEBUG_MODE
-      puts "BLJALF: #{added} / #{removed} / #{modified}"
       files_to_run = added + modified
       run(files_to_run)
     end
