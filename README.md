@@ -8,13 +8,23 @@ implicitcad_watcher
 [![Code Quality](https://img.shields.io/codacy/.svg)](https://www.codacy.com/app/aerickson/implicitcad_watcher)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
-SHORT_DESCRIPTION
+implicitcad_watcher watches any .escad files in the current directory and recompiles them with ImplicitCAD (http://www.implicitcad.org/).
+
+ImplicitCAD lacks an IDE like OpenSCAD and this makes it much easier to iterate on designs and get rapid feedback. I use OS X's Finder preview functionality displaying the STL file.
 
 ## Usage
 
+```
+cd directory_with_escad_files
+implicitcad_watcher
+// edit escad
+// view resulting stl file
+// repeat (edit and view cycle)
+```
+
 ## Installation
 
-    gem install implicitcad_watcher
+`gem install https://www.github.com/aerickson/implicitcad_watcher`
 
 ## License
 
