@@ -21,7 +21,10 @@ implicitcad_watcher
 
 ## Installation
 
-`gem install https://www.github.com/aerickson/implicitcad_watcher`
+```
+gem install specific_install
+gem specific_install -l https://www.github.com/aerickson/implicitcad_watcher
+```
 
 ## TODO
 
