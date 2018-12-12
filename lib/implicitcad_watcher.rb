@@ -22,7 +22,7 @@ class ImplicitCadWatcher
     run(files)
   end
 
-  def get_result_file(source_file)
+  def self.get_result_file(source_file)
     dest_dir = File.dirname(source_file)
     base_name = File.basename(source_file, '.escad')
     File.join(dest_dir, "#{base_name}.stl")
