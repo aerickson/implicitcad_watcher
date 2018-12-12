@@ -7,7 +7,6 @@ class ImplicitCadWatcher
   DEBUG_MODE = false
   ESCAD_FILE = '*.escad'.freeze
   IMPLICITCAD_BIN = '~/.cabal/bin/extopenscad'.freeze
-  RENDER_CMD = "#{IMPLICITCAD_BIN} -f stl -o output.stl #{ESCAD_FILE}".freeze
 
   attr_accessor :debug_mode, :ESCAD_FILE, :IMPLICITCAD_BIN, :RENDER_CMD
 
@@ -18,22 +17,27 @@ class ImplicitCadWatcher
 
   def self.first_run
     # TODO: if there is an escad file in the directory, call run
-    return unless Dir.glob(ESCAD_FILE)
-    run
+    files = Dir.glob(ESCAD_FILE)
+    return unless files
+    run(files)
   end
 
-  def self.run
-    puts RENDER_CMD if DEBUG_MODE
-    # TODO: do this
-    value = `#{RENDER_CMD}`
-    result = $CHILD_STATUS.exitstatus
-    # puts result
-    puts value
-    if result.zero?
-      # puts 'ok'
-    else
-      puts 'error'
-      raise
+  def get_result_file(source_file)
+    dest_dir = File.dirname(source_file)
+    base_name = File.basename(source_file, '.escad')
+    File.join(dest_dir, "#{base_name}.stl")
+  end
+
+  def self.run(files)
+    files.each do |file|
+      stl_file = get_result_file(file)
+      render_cmd = "#{IMPLICITCAD_BIN} -f stl -o #{stl_file} #{file}"
+      puts render_cmd if DEBUG_MODE
+      value = `#{render_cmd}`
+      result = $CHILD_STATUS.exitstatus
+      puts value
+      raise Exception('Command failed.') unless result.zero?
+      puts '--' unless file.equal?(files.last)
     end
     puts '--------'
   end
@@ -45,7 +49,9 @@ class ImplicitCadWatcher
       puts "modified absolute path: #{modified}" if DEBUG_MODE
       puts "added absolute path: #{added}" if DEBUG_MODE
       puts "removed absolute path: #{removed}" if DEBUG_MODE
-      run
+      puts "BLJALF: #{added} / #{removed} / #{modified}"
+      files_to_run = added + modified
+      run(files_to_run)
     end
     listener.start # not blocking
     listener.only(/\.escad$/) # overwrite all existing only patterns.
