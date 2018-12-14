@@ -11,7 +11,8 @@ class ImplicitCadWatcher
   ESCAD_REGEX = /\.escad$/
   IMPLICITCAD_BIN = '~/.cabal/bin/extopenscad'.freeze
 
-  attr_accessor :debug_mode, :ESCAD_FILE, :IMPLICITCAD_BIN, :RENDER_CMD
+  attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
+                :IMPLICITCAD_BIN, :RENDER_CMD
 
   # TODO: open a quickview window (`qlmanage -p FILE`) or get info window
   # - qlmanage seems to hang/beach ball...
