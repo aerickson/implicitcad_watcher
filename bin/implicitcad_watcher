@@ -6,7 +6,7 @@ trap('SIGINT') { handle_sigint }
 
 def handle_sigint
   # throw :ctrl_c
-  puts 'Ctrl-C receied. Exiting.'
+  puts "\nCtrl-C received. Exiting."
   exit 130
 end
 
