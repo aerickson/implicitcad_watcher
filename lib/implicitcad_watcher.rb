@@ -5,7 +5,10 @@ require 'listen'
 # here now
 class ImplicitCadWatcher
   DEBUG_MODE = false
-  ESCAD_FILE = '*.escad'.freeze
+  # TODO: don't have so many of these
+  ESCAD_FILE_ENDING = '.escad'.freeze
+  ESCAD_FILE_GLOB = '*.escad'.freeze
+  ESCAD_REGEX = /\.escad$/
   IMPLICITCAD_BIN = '~/.cabal/bin/extopenscad'.freeze
 
   attr_accessor :debug_mode, :ESCAD_FILE, :IMPLICITCAD_BIN, :RENDER_CMD
@@ -17,14 +20,14 @@ class ImplicitCadWatcher
 
   def self.first_run
     # TODO: if there is an escad file in the directory, call run
-    files = Dir.glob(ESCAD_FILE)
+    files = Dir.glob(ESCAD_FILE_GLOB)
     return unless files
     run(files)
   end
 
   def self.get_result_file(source_file)
     dest_dir = File.dirname(source_file)
-    base_name = File.basename(source_file, '.escad')
+    base_name = File.basename(source_file, ESCAD_FILE_ENDING)
     File.join(dest_dir, "#{base_name}.stl")
   end
 
@@ -53,7 +56,7 @@ class ImplicitCadWatcher
       run(files_to_run)
     end
     listener.start # not blocking
-    listener.only(/\.escad$/) # overwrite all existing only patterns.
+    listener.only(ESCAD_REGEX) # overwrite all existing only patterns.
     sleep
   end
 end
