@@ -5,10 +5,9 @@ require 'listen'
 # here now
 class ImplicitCadWatcher
   DEBUG_MODE = false
-  # TODO: don't have so many of these
   ESCAD_FILE_ENDING = '.escad'.freeze
-  ESCAD_FILE_GLOB = '*.escad'.freeze
-  ESCAD_REGEX = /\.escad$/
+  ESCAD_FILE_GLOB = ('*' + ESCAD_FILE_ENDING).freeze
+  ESCAD_REGEX = /\#{ESCAD_FILE_ENDING}$/
   IMPLICITCAD_BIN = '~/.cabal/bin/extopenscad'.freeze
 
   attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
