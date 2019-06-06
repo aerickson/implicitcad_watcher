@@ -4,6 +4,7 @@ require 'rubocop/rake_task'
 
 desc 'Run tests'
 RSpec::Core::RakeTask.new(:spec)
+RuboCop::RakeTask.new
 
 desc 'Run Rubocop on the gem'
 RuboCop::RakeTask.new(:rubocop) do |task|

@@ -1,4 +1,14 @@
-inherit_gem:
-  goodcop: .rubocop.yml
-Metrics/MethodLength:
-    Max: 20
+AllCops:
+  Exclude:
+    - "spec/**/*"
+    - "vendor/**/*"
+  TargetRubyVersion: 2.4
+
+Layout:
+  Enabled: false
+
+Metrics:
+  Enabled: false
+
+Style:
+  Enabled: false
