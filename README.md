@@ -13,9 +13,9 @@ ImplicitCAD lacks an IDE like OpenSCAD and this makes it much easier to iterate 
 
 ## `openscad_watcher`
 
-Some things just don't work in ImplicitCAD, so it's nice to be able to render with OpenSCAD. That's what openscad_watcher is for! It watches .scad files and renders them to STL's just like implicitcad_watcher.
+Some things just don't work in ImplicitCAD, so it's nice to be able to render with OpenSCAD. That's what openscad_watcher is for! It watches .scad files and renders them to STL's just like implicitcad_watcher. Use it just like `implicitcad_watcher` - see below.
 
-ImplicitCAD has features that OpenSCAD doesn't, so not everything will work.
+ImplicitCAD has features that OpenSCAD doesn't, so not all files will render. 
 
 ## Usage
 
