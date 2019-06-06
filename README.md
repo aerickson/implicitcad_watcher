@@ -9,6 +9,12 @@ implicitcad_watcher watches any .escad files in the current directory and recomp
 
 ImplicitCAD lacks an IDE like OpenSCAD and this makes it much easier to iterate on designs and get rapid feedback. I use OS X's Finder preview functionality displaying the STL file.
 
+## OpenSCAD
+
+Some things just don't work in ImplicitCAD, so it's nice to be able to render with OpenSCAD.
+
+That's what `openscad_watcher` is for!
+
 ## Usage
 
 ```
@@ -34,6 +40,8 @@ gem specific_install -l https://www.github.com/aerickson/implicitcad_watcher
 
 ### TODO
 
+- merge openscad_watcher and implicitcad_watcher
+- openscad_watcher: work on .escad or .scad files
 - arg parsing
   - verbose/debug mode
 - don't expect implicitcad in cabal location?
