@@ -5,6 +5,7 @@ require 'listen'
 # here now
 class OpenscadWatcher
   DEBUG_MODE = true
+  # TODO: take .scad and .escad
   ESCAD_FILE_ENDING = '.scad'.freeze
   ESCAD_FILE_GLOB = ('*' + ESCAD_FILE_ENDING).freeze
   ESCAD_REGEX = /#{Regexp.escape(ESCAD_FILE_ENDING)}$/
