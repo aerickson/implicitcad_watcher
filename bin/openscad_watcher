@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'implicitcad_watcher/openscad_watcher'
+
+trap('SIGINT') { handle_sigint }
+
+def handle_sigint
+  # throw :ctrl_c
+  puts "\nCtrl-C received. Exiting."
+  exit 130
+end
+
+puts OpenscadWatcher.main(ARGV[0])
