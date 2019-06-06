@@ -2,13 +2,11 @@
 
 require 'listen'
 
-# here now
 class OpenscadWatcher
   DEBUG_MODE = true
   # work on .scad and .escad
   ESCAD_FILE_ENDING = 'scad'.freeze
   ESCAD_FILE_GLOB = ('*.*' + ESCAD_FILE_ENDING).freeze
-  my_string = ".#{ESCAD_FILE_ENDING}"
   ESCAD_REGEX = /\.[e]*#{ESCAD_FILE_ENDING}$/
   # TODO: allow cnofiguration or better detection for non OS X
   IMPLICITCAD_BIN = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'.freeze
