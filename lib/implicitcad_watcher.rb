@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
 
-require 'listen'
+require "listen"
 
-require_relative 'openscad_watcher'
+require_relative "openscad_watcher"
 
 # here now
 class ImplicitCadWatcher
   DEBUG_MODE = false
-  ESCAD_FILE_ENDING = '.escad'.freeze
-  ESCAD_FILE_GLOB = ('*' + ESCAD_FILE_ENDING).freeze
+  ESCAD_FILE_ENDING = ".escad".freeze
+  ESCAD_FILE_GLOB = ("*" + ESCAD_FILE_ENDING).freeze
   ESCAD_REGEX = /#{Regexp.escape(ESCAD_FILE_ENDING)}$/
-  IMPLICITCAD_BIN = '~/.cabal/bin/extopenscad'.freeze
+  IMPLICITCAD_BIN = "~/.cabal/bin/extopenscad".freeze
 
   attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
                 :IMPLICITCAD_BIN, :RENDER_CMD
@@ -41,16 +41,16 @@ class ImplicitCadWatcher
       value = `#{render_cmd}`
       result = $CHILD_STATUS.exitstatus
       puts value
-      raise Exception('Command failed.') unless result.zero?
-      puts '--' unless file.equal?(files.last)
+      raise Exception("Command failed.") unless result.zero?
+      puts "--" unless file.equal?(files.last)
     end
-    puts '--------'
+    puts "--------"
   end
 
   def self.main(_argv)
     # puts "#{$PROGRAM_NAME}: watching..."
     first_run
-    listener = Listen.to('.') do |added, removed, modified|
+    listener = Listen.to(".") do |added, removed, modified|
       puts "modified absolute path: #{modified}" if DEBUG_MODE
       puts "added absolute path: #{added}" if DEBUG_MODE
       puts "removed absolute path: #{removed}" if DEBUG_MODE

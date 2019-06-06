@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
 
-require 'listen'
+require "listen"
 
 class OpenscadWatcher
   DEBUG_MODE = true
   # TODO: refactor names of these vars
   # work on .scad and .escad
-  ESCAD_FILE_GLOB = [('*.scad'),
-                      '*.escad'].freeze
+  ESCAD_FILE_GLOB = [("*.scad"),
+                     "*.escad"].freeze
   ESCAD_REGEX = /\.[e]*scad$/
   # TODO: allow cnofiguration or better detection for non OS X
-  IMPLICITCAD_BIN = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'.freeze
+  IMPLICITCAD_BIN = "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD".freeze
 
   attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
                 :IMPLICITCAD_BIN, :RENDER_CMD
@@ -30,7 +30,7 @@ class OpenscadWatcher
   def self.get_result_file(source_file)
     dest_dir = File.dirname(source_file)
     base_name_with_suffix = File.basename(source_file)
-    base_name = base_name_with_suffix.split('.')[0]
+    base_name = base_name_with_suffix.split(".")[0]
     File.join(dest_dir, "#{base_name}.stl")
   end
 
@@ -42,16 +42,16 @@ class OpenscadWatcher
       value = `#{render_cmd}`
       result = $CHILD_STATUS.exitstatus
       puts value
-      raise 'Command failed.' unless result.zero?
-      puts '--' unless file.equal?(files.last)
+      raise "Command failed." unless result.zero?
+      puts "--" unless file.equal?(files.last)
     end
-    puts '--------'
+    puts "--------"
   end
 
   def self.main(_argv)
     # puts "#{$PROGRAM_NAME}: watching..."
     first_run
-    listener = Listen.to('.') do |added, removed, modified|
+    listener = Listen.to(".") do |added, removed, modified|
       puts "modified absolute path: #{modified}" if DEBUG_MODE
       puts "added absolute path: #{added}" if DEBUG_MODE
       puts "removed absolute path: #{removed}" if DEBUG_MODE
