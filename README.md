@@ -5,15 +5,17 @@ implicitcad_watcher
 [![Build Status](https://img.shields.io/circleci/project/aerickson/implicitcad_watcher.svg)](https://circleci.com/gh/aerickson/implicitcad_watcher)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
+## overview
+
 implicitcad_watcher watches any .escad files in the current directory and recompiles them with ImplicitCAD (http://www.implicitcad.org/).
 
 ImplicitCAD lacks an IDE like OpenSCAD and this makes it much easier to iterate on designs and get rapid feedback. I use OS X's Finder preview functionality for displaying the resulting STL file.
 
-## OpenSCAD
+## `openscad_watcher`
 
-Some things just don't work in ImplicitCAD, so it's nice to be able to render with OpenSCAD.
+Some things just don't work in ImplicitCAD, so it's nice to be able to render with OpenSCAD. That's what openscad_watcher is for! It watches .scad files and renders them to STL's just like implicitcad_watcher.
 
-That's what `openscad_watcher` is for!
+ImplicitCAD has features that OpenSCAD doesn't, so not everything will work.
 
 ## Usage
 
@@ -46,6 +48,11 @@ gem specific_install -l https://www.github.com/aerickson/implicitcad_watcher
   - verbose/debug mode
 - don't expect implicitcad in cabal location?
   - look for on path or take config?
+
+## Links
+
+- http://www.implicitcad.org/
+- https://www.openscad.org/
 
 ## License
 
