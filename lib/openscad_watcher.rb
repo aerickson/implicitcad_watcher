@@ -5,10 +5,11 @@ require 'listen'
 # here now
 class OpenscadWatcher
   DEBUG_MODE = true
-  # TODO: take .scad and .escad
-  ESCAD_FILE_ENDING = '.scad'.freeze
-  ESCAD_FILE_GLOB = ('*' + ESCAD_FILE_ENDING).freeze
-  ESCAD_REGEX = /#{Regexp.escape(ESCAD_FILE_ENDING)}$/
+  # work on .scad and .escad
+  ESCAD_FILE_ENDING = 'scad'.freeze
+  ESCAD_FILE_GLOB = ('*.*' + ESCAD_FILE_ENDING).freeze
+  my_string = ".#{ESCAD_FILE_ENDING}"
+  ESCAD_REGEX = /\.[e]*#{ESCAD_FILE_ENDING}$/
   # TODO: allow cnofiguration or better detection for non OS X
   IMPLICITCAD_BIN = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'.freeze
 
@@ -29,7 +30,8 @@ class OpenscadWatcher
 
   def self.get_result_file(source_file)
     dest_dir = File.dirname(source_file)
-    base_name = File.basename(source_file, ESCAD_FILE_ENDING)
+    base_name_with_suffix = File.basename(source_file)
+    base_name = base_name_with_suffix.split('.')[0]
     File.join(dest_dir, "#{base_name}.stl")
   end
 
