@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
 
   s.files       = `git ls-files`.split
   s.executables << 'implicitcad_watcher'
+  s.executables << 'openscad_watcher'
   s.test_files = `git ls-files spec/*`.split
 
   s.add_dependency 'listen', '~> 3.0'

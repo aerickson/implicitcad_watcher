@@ -2,15 +2,14 @@
 
 require 'listen'
 
-require_relative 'openscad_watcher'
-
 # here now
-class ImplicitCadWatcher
-  DEBUG_MODE = false
-  ESCAD_FILE_ENDING = '.escad'.freeze
+class OpenscadWatcher
+  DEBUG_MODE = true
+  ESCAD_FILE_ENDING = '.scad'.freeze
   ESCAD_FILE_GLOB = ('*' + ESCAD_FILE_ENDING).freeze
   ESCAD_REGEX = /#{Regexp.escape(ESCAD_FILE_ENDING)}$/
-  IMPLICITCAD_BIN = '~/.cabal/bin/extopenscad'.freeze
+  # TODO: allow cnofiguration or better detection for non OS X
+  IMPLICITCAD_BIN = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'.freeze
 
   attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
                 :IMPLICITCAD_BIN, :RENDER_CMD
@@ -36,12 +35,12 @@ class ImplicitCadWatcher
   def self.run(files)
     files.each do |file|
       stl_file = get_result_file(file)
-      render_cmd = "#{IMPLICITCAD_BIN} -f stl -o \"#{stl_file}\" \"#{file}\""
+      render_cmd = "#{IMPLICITCAD_BIN} -o \"#{stl_file}\" -f \"#{file}\""
       puts render_cmd if DEBUG_MODE
       value = `#{render_cmd}`
       result = $CHILD_STATUS.exitstatus
       puts value
-      raise Exception('Command failed.') unless result.zero?
+      raise 'Command failed.' unless result.zero?
       puts '--' unless file.equal?(files.last)
     end
     puts '--------'

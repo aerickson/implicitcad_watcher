@@ -3,6 +3,7 @@ coverage/
 .coveralls.yml
 .bundle
 Gemfile.lock
+*.gem
 
 *.stl
 # *.escad
