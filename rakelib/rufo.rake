@@ -7,7 +7,14 @@ namespace :rufo do
   def rufo_command(*switches, rake_args)
     files_or_dirs = rake_args[:files_or_dirs] || "."
     args = switches + files_or_dirs.split(" ")
-    Rufo::Command.run(args)
+    sh "rufo #{args.join(" ")}" do |_ok, res|
+      if res.exitstatus != 0 and res.exitstatus != 3
+        fail "Command failed with status (status = #{res.exitstatus})"
+        # fail "Command failed with status (#{status.exitstatus}): [command hidden]"
+      end
+    end
+    # Rufo::Command stops execution of other tasks for some reason
+    # Rufo::Command.run(args)
   end
 
   desc "Format Ruby code in current directory"
