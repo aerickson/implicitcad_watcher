@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'implicitcad_watcher'
+require "implicitcad_watcher"
 
-trap('SIGINT') { handle_sigint }
+trap("SIGINT") { handle_sigint }
 
 def handle_sigint
   # throw :ctrl_c
