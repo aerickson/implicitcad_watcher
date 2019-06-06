@@ -2,6 +2,8 @@
 
 require 'listen'
 
+require_relative 'openscad_watcher'
+
 # here now
 class ImplicitCadWatcher
   DEBUG_MODE = false

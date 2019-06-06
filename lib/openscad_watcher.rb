@@ -4,7 +4,7 @@ require 'listen'
 
 # here now
 class OpenscadWatcher
-  DEBUG_MODE = false
+  DEBUG_MODE = true
   ESCAD_FILE_ENDING = '.scad'.freeze
   ESCAD_FILE_GLOB = ('*' + ESCAD_FILE_ENDING).freeze
   ESCAD_REGEX = /#{Regexp.escape(ESCAD_FILE_ENDING)}$/
@@ -35,12 +35,12 @@ class OpenscadWatcher
   def self.run(files)
     files.each do |file|
       stl_file = get_result_file(file)
-      render_cmd = "#{IMPLICITCAD_BIN} -o stl \"#{stl_file}\" \"#{file}\""
+      render_cmd = "#{IMPLICITCAD_BIN} -o \"#{stl_file}\" -f \"#{file}\""
       puts render_cmd if DEBUG_MODE
       value = `#{render_cmd}`
       result = $CHILD_STATUS.exitstatus
       puts value
-      raise Exception('Command failed.') unless result.zero?
+      raise 'Command failed.' unless result.zero?
       puts '--' unless file.equal?(files.last)
     end
     puts '--------'

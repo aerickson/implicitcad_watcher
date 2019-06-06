@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'implicitcad_watcher/openscad_watcher'
+require 'implicitcad_watcher'
 
 trap('SIGINT') { handle_sigint }
 
