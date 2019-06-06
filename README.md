@@ -13,7 +13,7 @@ ImplicitCAD lacks an IDE like OpenSCAD and this makes it much easier to iterate 
 
 ### openscad_watcher
 
-Some things just don't work in ImplicitCAD, so it's nice to be able to render with OpenSCAD. That's what `openscad_watcher` is for! Use it just like `implicitcad_watcher`, but on .scad files.
+Some things just don't work in ImplicitCAD, so it's nice to be able to render with OpenSCAD. That's what `openscad_watcher` is for! Use it just like `implicitcad_watcher`, but on .scad or .escad files.
 
 ImplicitCAD has features that OpenSCAD doesn't, so not all files will render. 
 
@@ -43,7 +43,6 @@ gem specific_install -l https://www.github.com/aerickson/implicitcad_watcher
 ### TODO
 
 - merge openscad_watcher and implicitcad_watcher into single class
-- openscad_watcher: work on .escad or .scad files
 - make openscad_watcher work on non-osx hosts
 - arg parsing
   - verbose/debug mode
