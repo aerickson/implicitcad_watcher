@@ -44,6 +44,7 @@ gem specific_install -l https://www.github.com/aerickson/implicitcad_watcher
 
 - merge openscad_watcher and implicitcad_watcher into single class
 - openscad_watcher: work on .escad or .scad files
+- make openscad_watcher work on non-osx hosts
 - arg parsing
   - verbose/debug mode
 - don't expect implicitcad in cabal location?
