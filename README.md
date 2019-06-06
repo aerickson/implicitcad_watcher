@@ -20,7 +20,7 @@ ImplicitCAD has features that OpenSCAD doesn't, so not all files will render.
 ## Usage
 
 ```
-cd directory_with_escad_files
+cd git/3d_models/fidget_spinner_915/
 implicitcad_watcher
 // edit escad
 // view resulting stl file
