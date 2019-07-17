@@ -37,7 +37,7 @@ class OpenscadWatcher
   def self.run(files)
     files.each do |file|
       stl_file = get_result_file(file)
-      render_cmd = "#{IMPLICITCAD_BIN} -o \"#{stl_file}\" -f \"#{file}\""
+      render_cmd = "#{IMPLICITCAD_BIN} -o \"#{stl_file}\" \"#{file}\""
       puts render_cmd if DEBUG_MODE
       value = `#{render_cmd}`
       result = $CHILD_STATUS.exitstatus
