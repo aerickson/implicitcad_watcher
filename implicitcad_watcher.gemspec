@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "listen", "~> 3.0"
 
-  s.add_development_dependency "codecov", "~> 0.4.3"
+  s.add_development_dependency "codecov", "~> 0.5.1"
   s.add_development_dependency "fuubar", "~> 2.4.1"
   s.add_development_dependency "goodcop", "~> 0.7.0"
   s.add_development_dependency "rake", "~> 13.0.0"
