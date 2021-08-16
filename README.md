@@ -2,7 +2,7 @@ implicitcad_watcher
 =========
 
 [![Gem Version](https://img.shields.io/gem/v/implicitcad_watcher.svg)](https://rubygems.org/gems/implicitcad_watcher)
-[![Build Status](https://img.shields.io/circleci/project/aerickson/implicitcad_watcher.svg)](https://circleci.com/gh/aerickson/implicitcad_watcher)
+[![CI](https://github.com/aerickson/implicitcad_watcher/actions/workflows/main.yml/badge.svg)](https://github.com/aerickson/implicitcad_watcher/actions/workflows/main.yml)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 ## overview

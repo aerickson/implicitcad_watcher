@@ -2,6 +2,7 @@ pkg/*.gem
 coverage/
 .coveralls.yml
 .bundle
+vendor/
 Gemfile.lock
 *.gem
 
