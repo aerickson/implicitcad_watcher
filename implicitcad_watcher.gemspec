@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.email = "aerickson@gmail.com"
   s.homepage = "https://github.com/aerickson/implicitcad_watcher"
   s.license = "MIT"
+  s.required_ruby_version = "2.6"
 
   s.files = `git ls-files`.split
   s.executables << "implicitcad_watcher"

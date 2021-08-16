@@ -12,8 +12,10 @@ class ImplicitCadWatcher
   ESCAD_REGEX = /#{Regexp.escape(ESCAD_FILE_ENDING)}$/
   IMPLICITCAD_BIN = "~/.cabal/bin/extopenscad".freeze
 
+  # rubocop:disable all
   attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
                 :IMPLICITCAD_BIN, :RENDER_CMD
+  # rubocop:enable all
 
   # TODO: open a quickview window (`qlmanage -p FILE`) or get info window
   # - qlmanage seems to hang/beach ball...

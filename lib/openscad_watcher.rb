@@ -12,8 +12,11 @@ class OpenscadWatcher
   # TODO: allow cnofiguration or better detection for non OS X
   IMPLICITCAD_BIN = "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD".freeze
 
+  # rubocop:disable all
   attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
                 :IMPLICITCAD_BIN, :RENDER_CMD
+  # rubocop:enable all
+
 
   # TODO: open a quickview window (`qlmanage -p FILE`) or get info window
   # - qlmanage seems to hang/beach ball...
