@@ -11,7 +11,8 @@ def handle_sigint
 end
 
 CadWatcher.new(
-  bin_path: File.expand_path("~/.cabal/bin/extopenscad"),
+  bin_name: "extopenscad",
+  # bin_paths: [File.expand_path("~/.cabal/bin/extopenscad")],
   file_globs: ["*.escad"],
   file_regex: /\.escad$/,
   render_cmd_template: ->(bin, src, dest) { "#{bin} -f stl -o \"#{dest}\" \"#{src}\"" },

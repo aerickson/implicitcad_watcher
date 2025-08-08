@@ -1,18 +1,21 @@
 require "listen"
 
 class CadWatcher
-  attr_reader :bin_path, :file_globs, :file_regex, :render_cmd_template, :debug_mode
+  attr_reader :bin_paths, :file_globs, :file_regex, :render_cmd_template, :debug_mode, :bin_name
 
   def initialize(
-    bin_path: nil,
+    bin_paths: [],         # Now always an Array of Strings
     bin_glob: nil,
+    bin_name: nil,         # Optional binary name to search on PATH first
     file_globs:,
     file_regex:,
     render_cmd_template:,
     debug_mode: false
   )
     @debug_mode = debug_mode
-    @bin_path = find_bin(bin_path, bin_glob)
+    @bin_name = bin_name
+    @bin_paths = bin_paths
+    @bin_path = find_bin(bin_name, bin_paths, bin_glob)
     @file_globs = Array(file_globs)
     @file_regex = file_regex
     @render_cmd_template = render_cmd_template
@@ -53,7 +56,7 @@ class CadWatcher
   def run(files)
     files.each_with_index do |file, idx|
       stl_file = get_result_file(file)
-      cmd = render_cmd_template.call(bin_path, file, stl_file)
+      cmd = render_cmd_template.call(@bin_path, file, stl_file)
       debug cmd
       value = `#{cmd}`
       result = $CHILD_STATUS.exitstatus
@@ -66,20 +69,36 @@ class CadWatcher
 
   private
 
-  def find_bin(bin_path, bin_glob)
-    if bin_path && File.exist?(File.expand_path(bin_path))
-      File.expand_path(bin_path)
-    elsif bin_glob
+  def find_bin(bin_name, bin_paths, bin_glob)
+    # 1. Check bin_name on PATH
+    if bin_name
+      path = `which #{bin_name}`.strip
+      if !path.empty? && File.exist?(path) && File.executable?(path)
+        puts "Using binary from PATH: #{path}"
+        return path
+      end
+    end
+
+    # 2. Check bin_paths
+    unless bin_paths.is_a?(Array)
+      raise ArgumentError, "bin_paths must be an array of paths"
+    end
+
+    bin_paths.each do |path|
+      expanded = File.expand_path(path)
+      return expanded if File.exist?(expanded) && File.executable?(expanded)
+    end
+
+    # 3. Check bin_glob
+    if bin_glob
       found = Array(bin_glob).flat_map { |g| Dir.glob(g) }.find { |f| File.executable?(f) }
       if found
         puts "Using binary: #{found}"
-        found
-      else
-        raise "CAD binary not found. Searched: #{bin_glob.inspect}"
+        return found
       end
-    else
-      raise "No binary path or glob provided."
     end
+
+    raise "CAD binary not found. Searched bin_name: #{bin_name.inspect}, paths: #{bin_paths.inspect}, globs: #{bin_glob.inspect}"
   end
 
   def debug(msg)
