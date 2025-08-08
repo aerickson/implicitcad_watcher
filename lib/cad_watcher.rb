@@ -87,8 +87,8 @@ class CadWatcher
       raise ArgumentError, "bin_paths must be an array of paths"
     end
 
-    bin_paths.each do |path|
-      expanded = File.expand_path(path)
+    bin_paths.each do |bin_path|
+      expanded = File.expand_path(bin_path)
       return expanded if File.exist?(expanded) && File.executable?(expanded)
     end
 
@@ -108,24 +108,28 @@ class CadWatcher
     puts "[DEBUG] #{msg}" if debug_mode
   end
 
-  # Returns a hash of options from CLI args
-  def self.config_from_argv(argv)
-    config = {}
-    OptionParser.new do |opts|
-      opts.banner = "Usage: #{File.basename($0)} [options]"
+  class << self
+    private
 
-      opts.on("-b", "--bin-name NAME", "Set the binary name") { |v| config[:bin_name] = v }
-      opts.on("-d", "--debug", "Enable debug mode") { config[:debug_mode] = true }
-      opts.on("-v", "--version", "Show version") do
-        require_relative "./version"
-        puts ImplicitcadWatcher::VERSION
-        exit
-      end
-      opts.on("-h", "--help", "Show this help message") do
-        puts opts
-        exit
-      end
-    end.parse!(argv)
-    config # Always a hash!
+    # Returns a hash of options from CLI args
+    def config_from_argv(argv)
+      config = {}
+      OptionParser.new do |opts|
+        opts.banner = "Usage: #{File.basename($0)} [options]"
+
+        opts.on("-b", "--bin-name NAME", "Set the binary name") { |v| config[:bin_name] = v }
+        opts.on("-d", "--debug", "Enable debug mode") { config[:debug_mode] = true }
+        opts.on("-v", "--version", "Show version") do
+          require_relative "./version"
+          puts ImplicitcadWatcher::VERSION
+          exit
+        end
+        opts.on("-h", "--help", "Show this help message") do
+          puts opts
+          exit
+        end
+      end.parse!(argv)
+      config # Always a hash!
+    end
   end
 end
