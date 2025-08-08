@@ -83,4 +83,37 @@ describe CadWatcher do
       watcher.first_run
     end
   end
+
+  describe "#glob_to_regexp" do
+    let(:watcher) {
+      CadWatcher.new(
+        bin_paths: [dummy_bin],
+        filetype_globs: filetype_globs,
+        watch_globs: watch_globs,
+        render_cmd_template: render_cmd_template
+      )
+    }
+
+    it "converts '*' to match any characters" do
+      re = watcher.send(:glob_to_regexp, "*.escad")
+      expect("foo.escad").to match(re)
+      expect("bar.escad").to match(re)
+      expect("foo.txt").not_to match(re)
+    end
+
+    it "escapes dots and matches literal dots" do
+      re = watcher.send(:glob_to_regexp, "test.*.escad")
+      expect("test.foo.escad").to match(re)
+      expect("test..escad").to match(re)
+      expect("testescad").not_to match(re)
+    end
+
+    it "matches the whole string (anchors)" do
+      re = watcher.send(:glob_to_regexp, "foo.*")
+      expect("foo.bar").to match(re)
+      expect("foo.bar.baz").to match(re)
+      expect("afoo.bar").not_to match(re)
+      expect("foo.bar.baz.txt").to match(re)
+    end
+  end
 end
