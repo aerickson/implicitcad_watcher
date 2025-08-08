@@ -13,7 +13,7 @@ describe CadWatcher do
         filetype_globs: filetype_globs,
         watch_globs: watch_globs,
         render_cmd_template: render_cmd_template,
-        debug_mode: true
+        debug_mode: true,
       )
       expect(watcher.filetype_globs).to eq(filetype_globs)
       expect(watcher.watch_globs).to eq(watch_globs)
@@ -28,7 +28,7 @@ describe CadWatcher do
         bin_paths: [dummy_bin],
         filetype_globs: filetype_globs,
         watch_globs: watch_globs,
-        render_cmd_template: render_cmd_template
+        render_cmd_template: render_cmd_template,
       )
       expect(watcher.get_result_file("foo/bar/test.escad")).to eq("foo/bar/test.stl")
     end
@@ -48,7 +48,7 @@ describe CadWatcher do
         bin_paths: [dummy_bin],
         filetype_globs: filetype_globs,
         watch_globs: watch_globs,
-        render_cmd_template: render_cmd_template
+        render_cmd_template: render_cmd_template,
       )
       files = ["test/test.escad"]
       expect { watcher.run(files) }.to output(/Running: \/bin\/echo test\/test.escad test\/test.stl/).to_stdout
@@ -76,7 +76,7 @@ describe CadWatcher do
         bin_paths: [dummy_bin],
         filetype_globs: ["test/*.escad"],
         watch_globs: ["test/*.escad"],
-        render_cmd_template: render_cmd_template
+        render_cmd_template: render_cmd_template,
       )
       allow(Dir).to receive(:glob).with("test/*.escad").and_return(["test/test.escad", "test/haha.escad", "test/ignore.txt"])
       expect(watcher).to receive(:run).with(["test/test.escad", "test/haha.escad"])
@@ -90,7 +90,7 @@ describe CadWatcher do
         bin_paths: [dummy_bin],
         filetype_globs: filetype_globs,
         watch_globs: watch_globs,
-        render_cmd_template: render_cmd_template
+        render_cmd_template: render_cmd_template,
       )
     }
 
@@ -131,7 +131,7 @@ describe CadWatcher do
         filetype_globs: filetype_globs,
         watch_globs: watch_globs,
         render_cmd_template: render_cmd_template,
-        debug_mode: true
+        debug_mode: true,
       })
     end
 
@@ -141,7 +141,7 @@ describe CadWatcher do
         filetype_globs: filetype_globs,
         watch_globs: watch_globs,
         render_cmd_template: render_cmd_template,
-        debug_mode: true
+        debug_mode: true,
       )
       allow(CadWatcher).to receive(:new).and_return(real_instance)
       expect(real_instance).to receive(:first_run).and_call_original

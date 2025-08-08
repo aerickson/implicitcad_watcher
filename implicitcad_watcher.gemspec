@@ -1,6 +1,6 @@
-  lib = File.expand_path('../lib', __FILE__)
-  $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-  require './lib/version'
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require "./lib/version"
 
 Gem::Specification.new do |s|
   s.name = "implicitcad_watcher"
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email = "aerickson@gmail.com"
   s.homepage = "https://github.com/aerickson/implicitcad_watcher"
   s.license = "MIT"
-  s.required_ruby_version = '>= 2.6.0'
+  s.required_ruby_version = ">= 2.6.0"
 
   s.files = `git ls-files`.split
   s.executables << "implicitcad_watcher"
