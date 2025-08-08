@@ -69,4 +69,18 @@ describe CadWatcher do
       }.to raise_error(/Binary not found/)
     end
   end
+
+  describe "#first_run" do
+    it "calls run with files matching filetype_globs and watch_globs" do
+      watcher = CadWatcher.new(
+        bin_paths: [dummy_bin],
+        filetype_globs: ["test/*.escad"],
+        watch_globs: ["test/*.escad"],
+        render_cmd_template: render_cmd_template
+      )
+      allow(Dir).to receive(:glob).with("test/*.escad").and_return(["test/test.escad", "test/haha.escad", "test/ignore.txt"])
+      expect(watcher).to receive(:run).with(["test/test.escad", "test/haha.escad"])
+      watcher.first_run
+    end
+  end
 end
