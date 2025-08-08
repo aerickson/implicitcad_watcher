@@ -111,7 +111,7 @@ class CadWatcher
       end
     end
 
-    raise "CAD binary not found. Searched bin_name: #{bin_name.inspect}, paths: #{bin_paths.inspect}, globs: #{bin_glob.inspect}"
+    raise "Binary not found. Searched bin_name: #{bin_name.inspect}, paths: #{bin_paths.inspect}, globs: #{bin_glob.inspect}"
   end
 
   def debug(msg)
