@@ -8,4 +8,4 @@ if ENV["CI"] == "true"
 end
 
 require "rspec"
-require "implicitcad_watcher"
+require "cad_watcher"

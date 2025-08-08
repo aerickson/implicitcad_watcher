@@ -1,13 +1,16 @@
 #!/usr/bin/env ruby
 
-require "implicitcad_watcher"
+require_relative "../lib/cad_watcher"
 
-trap("SIGINT") { handle_sigint }
+trap("SIGINT") { puts "\nCtrl-C received. Exiting."; exit 130 }
 
-def handle_sigint
-  # throw :ctrl_c
-  puts "\nCtrl-C received. Exiting."
-  exit 130
-end
-
-puts ImplicitCadWatcher.main(ARGV[0])
+CadWatcher.main(
+  {
+    bin_name: "extopenscad",
+    # bin_paths: [File.expand_path("~/.cabal/bin/extopenscad")],
+    file_globs: ["*.escad"],
+    file_regex: /\.escad$/,
+    render_cmd_template: ->(bin, src, dest) { "#{bin} -f stl -o \"#{dest}\" \"#{src}\"" },
+    debug_mode: false
+  }
+)
