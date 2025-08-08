@@ -1,4 +1,5 @@
 pkg/*.gem
+codecov.yml
 coverage/
 .coveralls.yml
 .bundle

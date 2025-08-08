@@ -7,9 +7,8 @@ trap("SIGINT") { puts "\nCtrl-C received. Exiting."; exit 130 }
 CadWatcher.main(
   {
     bin_name: "extopenscad",
-    # bin_paths: [File.expand_path("~/.cabal/bin/extopenscad")],
-    file_globs: ["*.escad"],
-    file_regex: /\.escad$/,
+    filetype_globs: ["*.escad"],
+    watch_globs: ["**/*.escad"],
     render_cmd_template: ->(bin, src, dest) { "#{bin} -f stl -o \"#{dest}\" \"#{src}\"" },
     debug_mode: false
   }
