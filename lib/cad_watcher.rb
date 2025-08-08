@@ -58,6 +58,7 @@ class CadWatcher
       stl_file = get_result_file(file)
       cmd = render_cmd_template.call(@bin_path, file, stl_file)
       debug cmd
+      puts "Running: #{cmd}"
       value = `#{cmd}`
       result = $CHILD_STATUS.exitstatus
       puts value

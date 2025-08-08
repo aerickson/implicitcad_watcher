@@ -12,7 +12,7 @@ end
 
 CadWatcher.new(
   bin_glob: ["/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD", "/Applications/OpenSCAD*.app/Contents/MacOS/OpenSCAD"],
-  file_globs: ["*.scad", "*.escad"],
+  file_globs: ["*.scad"],
   file_regex: /\.[e]*scad$/,
   render_cmd_template: ->(bin, src, dest) { "#{bin} -o \"#{dest}\" \"#{src}\"" },
   debug_mode: true
