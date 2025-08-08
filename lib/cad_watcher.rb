@@ -1,3 +1,4 @@
+require "optparse"
 require "listen"
 
 class CadWatcher
@@ -21,9 +22,10 @@ class CadWatcher
     @render_cmd_template = render_cmd_template
   end
 
-  def self.main(argv = [])
-    # This method should be called from the bin script.
-    watcher = new(*self.config_from_argv(argv))
+  def self.main(bin_config = {}, argv = ARGV)
+    cli_config = config_from_argv(argv)
+    merged = bin_config.merge(cli_config) # CLI args override binary config
+    watcher = new(**merged)
     watcher.start
   end
 
@@ -106,9 +108,19 @@ class CadWatcher
     puts "[DEBUG] #{msg}" if debug_mode
   end
 
-  # Optionally, parse CLI args here
+  # Returns a hash of options from CLI args
   def self.config_from_argv(argv)
-    # For now, just return an empty hash; bin scripts should pass config directly.
-    []
+    config = {}
+    OptionParser.new do |opts|
+      opts.banner = "Usage: #{File.basename($0)} [options]"
+
+      opts.on("-b", "--bin-name NAME", "Set the binary name") { |v| config[:bin_name] = v }
+      opts.on("-d", "--debug", "Enable debug mode") { config[:debug_mode] = true }
+      opts.on("-h", "--help", "Show this help message") do
+        puts opts
+        exit
+      end
+    end.parse!(argv)
+    config # Always a hash!
   end
 end
