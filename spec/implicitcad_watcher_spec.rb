@@ -116,4 +116,39 @@ describe CadWatcher do
       expect("foo.bar.baz.txt").to match(re)
     end
   end
+
+  describe ".main" do
+    let(:dummy_bin) { "/bin/echo" }
+    let(:filetype_globs) { ["test/*.escad"] }
+    let(:watch_globs) { ["test/*.escad"] }
+    let(:render_cmd_template) { ->(bin, src, dest) { "#{bin} #{src} #{dest}" } }
+
+    before do
+      stub_const("ARGV", ["--bin-name", "echo", "--debug"])
+      allow(CadWatcher).to receive(:config_from_argv).and_return({
+        bin_name: "echo",
+        bin_paths: [dummy_bin],
+        filetype_globs: filetype_globs,
+        watch_globs: watch_globs,
+        render_cmd_template: render_cmd_template,
+        debug_mode: true
+      })
+    end
+
+    it "runs without error and calls first_run and start" do
+      real_instance = CadWatcher.new(
+        bin_paths: [dummy_bin],
+        filetype_globs: filetype_globs,
+        watch_globs: watch_globs,
+        render_cmd_template: render_cmd_template,
+        debug_mode: true
+      )
+      allow(CadWatcher).to receive(:new).and_return(real_instance)
+      expect(real_instance).to receive(:first_run).and_call_original
+      # Stub out Listen.to and sleep to prevent blocking
+      allow(Listen).to receive(:to).and_return(double("listener", only: nil, start: nil))
+      allow(real_instance).to receive(:sleep)
+      expect { CadWatcher.main }.not_to raise_error
+    end
+  end
 end
