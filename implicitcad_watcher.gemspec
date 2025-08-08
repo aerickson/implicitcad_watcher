@@ -5,10 +5,9 @@
 Gem::Specification.new do |s|
   s.name = "implicitcad_watcher"
   s.version = ImplicitcadWatcher::VERSION
-  s.date = Time.now.strftime("%Y-%m-%d")
 
-  s.summary = ""
-  s.description = ""
+  s.summary = "A file watcher for ImplicitCAD and OpenSCAD projects."
+  s.description = "Automatically watches your ImplicitCAD and OpenSCAD project files and triggers rebuilds when changes are detected. It streamlines the workflow for CAD development by providing instant feedback and automation."
   s.authors = ["Andrew Erickson"]
   s.email = "aerickson@gmail.com"
   s.homepage = "https://github.com/aerickson/implicitcad_watcher"
