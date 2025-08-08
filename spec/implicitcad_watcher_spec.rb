@@ -2,21 +2,21 @@ require "spec_helper"
 
 describe CadWatcher do
   let(:dummy_bin) { "/bin/echo" }
-  let(:file_globs) { ["test/*.escad"] }
-  let(:file_regex) { /\.escad$/ }
+  let(:filetype_globs) { ["test/*.escad"] }
+  let(:watch_globs) { ["test/*.escad"] }
   let(:render_cmd_template) { ->(bin, src, dest) { "#{bin} #{src} #{dest}" } }
 
   describe "#initialize" do
     it "sets attributes correctly" do
       watcher = CadWatcher.new(
         bin_paths: [dummy_bin],
-        file_globs: file_globs,
-        file_regex: file_regex,
+        filetype_globs: filetype_globs,
+        watch_globs: watch_globs,
         render_cmd_template: render_cmd_template,
         debug_mode: true
       )
-      expect(watcher.file_globs).to eq(file_globs)
-      expect(watcher.file_regex).to eq(file_regex)
+      expect(watcher.filetype_globs).to eq(filetype_globs)
+      expect(watcher.watch_globs).to eq(watch_globs)
       expect(watcher.render_cmd_template).to eq(render_cmd_template)
       expect(watcher.debug_mode).to eq(true)
     end
@@ -26,8 +26,8 @@ describe CadWatcher do
     it "returns .stl file path for a given source file" do
       watcher = CadWatcher.new(
         bin_paths: [dummy_bin],
-        file_globs: file_globs,
-        file_regex: file_regex,
+        filetype_globs: filetype_globs,
+        watch_globs: watch_globs,
         render_cmd_template: render_cmd_template
       )
       expect(watcher.get_result_file("foo/bar/test.escad")).to eq("foo/bar/test.stl")
@@ -46,8 +46,8 @@ describe CadWatcher do
     it "runs the render command for each file" do
       watcher = CadWatcher.new(
         bin_paths: [dummy_bin],
-        file_globs: file_globs,
-        file_regex: file_regex,
+        filetype_globs: filetype_globs,
+        watch_globs: watch_globs,
         render_cmd_template: render_cmd_template
       )
       files = ["test/test.escad"]
@@ -66,7 +66,7 @@ describe CadWatcher do
       watcher = CadWatcher.allocate
       expect {
         watcher.send(:find_bin, "nonexistent_binary", [], nil)
-      }.to raise_error(/CAD binary not found/)
+      }.to raise_error(/Binary not found/)
     end
   end
 end
