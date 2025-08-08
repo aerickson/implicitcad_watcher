@@ -116,6 +116,11 @@ class CadWatcher
 
       opts.on("-b", "--bin-name NAME", "Set the binary name") { |v| config[:bin_name] = v }
       opts.on("-d", "--debug", "Enable debug mode") { config[:debug_mode] = true }
+      opts.on("-v", "--version", "Show version") do
+        require_relative "../implicitcad_watcher"
+        puts ImplicitcadWatcher::VERSION
+        exit
+      end
       opts.on("-h", "--help", "Show this help message") do
         puts opts
         exit

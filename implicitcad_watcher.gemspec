@@ -1,6 +1,10 @@
+  lib = File.expand_path('../lib', __FILE__)
+  $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+  require './lib/version'
+
 Gem::Specification.new do |s|
   s.name = "implicitcad_watcher"
-  s.version = "0.0.3"
+  s.version = ImplicitcadWatcher::VERSION
   s.date = Time.now.strftime("%Y-%m-%d")
 
   s.summary = ""
