@@ -16,7 +16,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment: prod
     strategy:
       matrix:
         ruby-version: ['2.6', '2.7', '3.0', '3.2', '3.3']
@@ -34,4 +33,6 @@ jobs:
     - name: build
       run: bundle install && bundle check
     - name: test
+      env: # Or as an environment variable
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: bundle install && bundle exec rake
