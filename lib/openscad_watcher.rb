@@ -9,19 +9,51 @@ class OpenscadWatcher
   ESCAD_FILE_GLOB = [("*.scad"),
                      "*.escad"].freeze
   ESCAD_REGEX = /\.[e]*scad$/
-  # TODO: allow cnofiguration or better detection for non OS X
-  IMPLICITCAD_BIN = "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD".freeze
 
   # rubocop:disable all
   attr_accessor :debug_mode, :ESCAD_FILE_GLOB, :ESCAD_FILE_ENDING, :ESCAD_REGEX,
-                :IMPLICITCAD_BIN, :RENDER_CMD
+                :RENDER_CMD
   # rubocop:enable all
 
+  class << self
+    attr_accessor :implicitcad_bin
+  end
 
   # TODO: open a quickview window (`qlmanage -p FILE`) or get info window
   # - qlmanage seems to hang/beach ball...
   # - write little os x app for it?
   #   - https://github.com/Daij-Djan/QuicklookAdditionalViews
+
+  def self.startup_check
+    # TODO: implement startup checks
+
+    search_paths = ["/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD"]
+
+    # check that the OpenSCAD binary exists
+    bin_path = nil
+    if File.exist?(search_paths.first)
+      bin_path = search_paths.first
+    else
+      # Try to find any app starting with OpenSCAD in /Applications
+      alt_app = Dir.glob("/Applications/OpenSCAD*.app").first
+      if alt_app
+        alt_bin = File.join(alt_app, "Contents/MacOS/OpenSCAD")
+        if File.exist?(alt_bin)
+          bin_path = alt_bin
+          puts "Found alternative OpenSCAD binary: #{alt_bin}"
+        else
+          puts "OpenSCAD binary not found in #{alt_app}."
+          return false
+        end
+      else
+        puts "OpenSCAD binary not found."
+        return false
+      end
+    end
+
+    self.implicitcad_bin = bin_path
+    true
+  end
 
   def self.first_run
     # TODO: if there is an escad file in the directory, call run
@@ -40,7 +72,7 @@ class OpenscadWatcher
   def self.run(files)
     files.each do |file|
       stl_file = get_result_file(file)
-      render_cmd = "#{IMPLICITCAD_BIN} -o \"#{stl_file}\" \"#{file}\""
+      render_cmd = "#{implicitcad_bin} -o \"#{stl_file}\" \"#{file}\""
       puts render_cmd if DEBUG_MODE
       value = `#{render_cmd}`
       result = $CHILD_STATUS.exitstatus

@@ -1,13 +1,19 @@
 #!/usr/bin/env ruby
+# filepath: bin/openscad_watcher
 
-require "implicitcad_watcher"
+require_relative "../lib/cad_watcher"
 
 trap("SIGINT") { handle_sigint }
 
 def handle_sigint
-  # throw :ctrl_c
   puts "\nCtrl-C received. Exiting."
   exit 130
 end
 
-puts OpenscadWatcher.main(ARGV[0])
+CadWatcher.new(
+  bin_glob: ["/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD", "/Applications/OpenSCAD*.app/Contents/MacOS/OpenSCAD"],
+  file_globs: ["*.scad", "*.escad"],
+  file_regex: /\.[e]*scad$/,
+  render_cmd_template: ->(bin, src, dest) { "#{bin} -o \"#{dest}\" \"#{src}\"" },
+  debug_mode: true
+).start
