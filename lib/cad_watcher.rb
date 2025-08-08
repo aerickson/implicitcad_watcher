@@ -26,8 +26,11 @@ class CadWatcher
     # default watch_globs to "*"
     defaults = { watch_globs: ["*"] }
     cli_config = config_from_argv(argv)
-    merged = bin_config.merge(cli_config) # CLI args override binary config
-    merged = defaults.merge(merged)       # Defaults override anything else
+    # After parsing, argv contains only positional args (globs)
+    watch_globs = argv.empty? ? nil : argv.dup
+    merged = bin_config.merge(cli_config)
+    merged[:watch_globs] = watch_globs if watch_globs
+    merged = defaults.merge(merged)
     watcher = new(**merged)
     watcher.start
   end
@@ -126,7 +129,12 @@ class CadWatcher
     def config_from_argv(argv)
       config = {}
       OptionParser.new do |opts|
-        opts.banner = "Usage: #{File.basename($0)} [options]"
+        opts.banner = <<~BANNER
+          Usage: #{File.basename($0)} [options] [watch_glob1 watch_glob2 ...]
+          Watches files matching the given globs (default: "*") and runs the render command when they change.
+
+          Options:
+        BANNER
 
         opts.on("-b", "--bin-name NAME", "Set the binary name") { |v| config[:bin_name] = v }
         opts.on("-d", "--debug", "Enable debug mode") { config[:debug_mode] = true }

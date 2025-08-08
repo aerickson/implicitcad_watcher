@@ -7,7 +7,7 @@ trap("SIGINT") { puts "\nCtrl-C received. Exiting."; exit 130 }
 CadWatcher.main(
   {
     bin_glob: ["/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD", "/Applications/OpenSCAD*.app/Contents/MacOS/OpenSCAD"],
-    filetype_globs: ["*.scad"],
+    filetype_globs: ["*.scad", "*.escad"],
     render_cmd_template: ->(bin, src, dest) { "#{bin} -o \"#{dest}\" \"#{src}\"" },
     debug_mode: true
   }
