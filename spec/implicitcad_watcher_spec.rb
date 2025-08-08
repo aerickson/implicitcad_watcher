@@ -1,1 +1,72 @@
 require "spec_helper"
+
+describe CadWatcher do
+  let(:dummy_bin) { "/bin/echo" }
+  let(:file_globs) { ["test/*.escad"] }
+  let(:file_regex) { /\.escad$/ }
+  let(:render_cmd_template) { ->(bin, src, dest) { "#{bin} #{src} #{dest}" } }
+
+  describe "#initialize" do
+    it "sets attributes correctly" do
+      watcher = CadWatcher.new(
+        bin_paths: [dummy_bin],
+        file_globs: file_globs,
+        file_regex: file_regex,
+        render_cmd_template: render_cmd_template,
+        debug_mode: true
+      )
+      expect(watcher.file_globs).to eq(file_globs)
+      expect(watcher.file_regex).to eq(file_regex)
+      expect(watcher.render_cmd_template).to eq(render_cmd_template)
+      expect(watcher.debug_mode).to eq(true)
+    end
+  end
+
+  describe "#get_result_file" do
+    it "returns .stl file path for a given source file" do
+      watcher = CadWatcher.new(
+        bin_paths: [dummy_bin],
+        file_globs: file_globs,
+        file_regex: file_regex,
+        render_cmd_template: render_cmd_template
+      )
+      expect(watcher.get_result_file("foo/bar/test.escad")).to eq("foo/bar/test.stl")
+    end
+  end
+
+  describe ".config_from_argv" do
+    it "parses --bin-name and --debug" do
+      config = CadWatcher.send(:config_from_argv, ["--bin-name", "mybin", "--debug"])
+      expect(config[:bin_name]).to eq("mybin")
+      expect(config[:debug_mode]).to eq(true)
+    end
+  end
+
+  describe "#run" do
+    it "runs the render command for each file" do
+      watcher = CadWatcher.new(
+        bin_paths: [dummy_bin],
+        file_globs: file_globs,
+        file_regex: file_regex,
+        render_cmd_template: render_cmd_template
+      )
+      files = ["test/test.escad"]
+      expect { watcher.run(files) }.to output(/Running: \/bin\/echo test\/test.escad test\/test.stl/).to_stdout
+    end
+  end
+
+  describe "#find_bin" do
+    it "finds a binary by bin_name on PATH" do
+      watcher = CadWatcher.allocate
+      path = watcher.send(:find_bin, "echo", [], nil)
+      expect(path).to end_with("/echo")
+    end
+
+    it "raises if binary not found" do
+      watcher = CadWatcher.allocate
+      expect {
+        watcher.send(:find_bin, "nonexistent_binary", [], nil)
+      }.to raise_error(/CAD binary not found/)
+    end
+  end
+end
