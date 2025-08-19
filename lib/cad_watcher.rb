@@ -119,7 +119,7 @@ class CadWatcher
   end
 
   def glob_to_regexp(glob)
-    Regexp.new('\A' + glob.gsub('.', '\.').gsub('*', '.*') + '\z')
+    Regexp.new('\A' + glob.gsub(".", '\.').gsub("*", ".*") + '\z')
   end
 
   class << self
